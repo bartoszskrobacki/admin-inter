@@ -1,9 +1,17 @@
 import { useState } from 'react';
 import { promotionAPI, type Promotion, type Meal } from '@/lib/api';
+import { PROMOTION_TAGS } from '@/lib/tags';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import {
   Dialog,
   DialogContent,
@@ -21,6 +29,7 @@ interface PromotionDialogProps {
 export function PromotionDialog({ promotion, onClose }: PromotionDialogProps) {
   const isEdit = !!promotion;
   const [name, setName] = useState(promotion?.name || '');
+  const [tag, setTag] = useState(promotion?.tag || '');
   const [meals, setMeals] = useState<Meal[]>(promotion?.meals || [{ name: '', description: '', price: 0 }]);
   const [publishToFacebook, setPublishToFacebook] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -53,11 +62,12 @@ export function PromotionDialog({ promotion, onClose }: PromotionDialogProps) {
       if (isEdit) {
         await promotionAPI.update(promotion.id, {
           name,
+          tag,
           meals: cleanMeals,
           publishToFacebook
         });
       } else {
-        await promotionAPI.create({ name, meals: cleanMeals });
+        await promotionAPI.create({ name, tag, meals: cleanMeals });
       }
 
       onClose();
@@ -83,6 +93,20 @@ export function PromotionDialog({ promotion, onClose }: PromotionDialogProps) {
           <div>
             <Label htmlFor="name">Promotion Name</Label>
             <Input id="name" value={name} onChange={(e) => setName(e.target.value)} />
+          </div>
+
+          <div>
+            <Label htmlFor="tag">Tag</Label>
+            <Select value={tag} onValueChange={setTag} disabled={isEdit}>
+              <SelectTrigger id="tag">
+                <SelectValue placeholder="Wybierz tag" />
+              </SelectTrigger>
+              <SelectContent>
+                {PROMOTION_TAGS.map((t) => (
+                  <SelectItem key={t} value={t}>{t}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           {isEdit && (

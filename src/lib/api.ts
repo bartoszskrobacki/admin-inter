@@ -36,6 +36,7 @@ export interface Meal {
 
 export interface Promotion {
   id: string;
+  tag: string;
   name: string;
   meals: Meal[];
 }
@@ -46,8 +47,8 @@ export const promotionAPI = {
     return data;
   },
 
-  getOne: async (id: string) => {
-    const { data } = await api.get<{ promotion: Promotion; image: string }>(`/promotion/${id}`);
+  getOne: async (tag: string) => {
+    const { data } = await api.get<{ promotion: Promotion; image: string }>(`/promotion/${tag}`);
     return data;
   },
 

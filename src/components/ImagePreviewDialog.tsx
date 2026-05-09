@@ -9,18 +9,18 @@ import {
 } from '@/components/ui/dialog';
 
 interface ImagePreviewDialogProps {
-  promotionId: string;
+  promotionTag: string;
   onClose: () => void;
 }
 
-export function ImagePreviewDialog({ promotionId, onClose }: ImagePreviewDialogProps) {
+export function ImagePreviewDialog({ promotionTag, onClose }: ImagePreviewDialogProps) {
   const [imageUrl, setImageUrl] = useState<string>('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadImage = async () => {
       try {
-        const data = await promotionAPI.getOne(promotionId);
+        const data = await promotionAPI.getOne(promotionTag);
         setImageUrl(data.image);
       } catch (error) {
         console.error('Failed to load image:', error);
@@ -30,7 +30,7 @@ export function ImagePreviewDialog({ promotionId, onClose }: ImagePreviewDialogP
     };
 
     loadImage();
-  }, [promotionId]);
+  }, [promotionTag]);
 
   return (
     <Dialog open={true} onOpenChange={onClose}>

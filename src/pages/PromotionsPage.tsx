@@ -10,7 +10,7 @@ export function PromotionsPage() {
   const [promotions, setPromotions] = useState<Promotion[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedPromotion, setSelectedPromotion] = useState<Promotion | null | undefined>(undefined);
-  const [previewId, setPreviewId] = useState<string | null>(null);
+  const [previewTag, setPreviewTag] = useState<string | null>(null);
   const { logout } = useAuth();
 
   const loadPromotions = async () => {
@@ -87,7 +87,7 @@ export function PromotionsPage() {
                 ))}
               </div>
               <div className="flex gap-2">
-                <Button size="sm" variant="outline" onClick={() => setPreviewId(promotion.id)}>
+                <Button size="sm" variant="outline" onClick={() => setPreviewTag(promotion.tag)}>
                   Preview
                 </Button>
                 <Button size="sm" variant="outline" onClick={() => handleEdit(promotion)}>
@@ -113,10 +113,10 @@ export function PromotionsPage() {
         />
       )}
 
-      {previewId && (
+      {previewTag && (
         <ImagePreviewDialog
-          promotionId={previewId}
-          onClose={() => setPreviewId(null)}
+          promotionTag={previewTag}
+          onClose={() => setPreviewTag(null)}
         />
       )}
     </div>
