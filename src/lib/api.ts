@@ -9,11 +9,16 @@ export const api = axios.create({
   },
 });
 
+const API_KEY = import.meta.env.VITE_API_KEY;
+
 // Add auth token to requests
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('auth_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+  }
+  if (API_KEY) {
+    config.headers['x-api-key'] = API_KEY;
   }
   return config;
 });
@@ -31,7 +36,7 @@ export interface Meal {
   name: string;
   description?: string;
   additionals?: string;
-  price: number;
+  price: string;
 }
 
 export interface Promotion {

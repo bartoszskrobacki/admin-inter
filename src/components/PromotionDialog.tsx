@@ -30,18 +30,18 @@ export function PromotionDialog({ promotion, onClose }: PromotionDialogProps) {
   const isEdit = !!promotion;
   const [name, setName] = useState(promotion?.name || '');
   const [tag, setTag] = useState(promotion?.tag || '');
-  const [meals, setMeals] = useState<Meal[]>(promotion?.meals || [{ name: '', description: '', price: 0 }]);
+  const [meals, setMeals] = useState<Meal[]>(promotion?.meals || [{ name: '', description: '', price: '' }]);
   const [publishToFacebook, setPublishToFacebook] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleMealChange = (index: number, field: keyof Meal, value: string | number) => {
+  const handleMealChange = (index: number, field: keyof Meal, value: string) => {
     const newMeals = [...meals];
     newMeals[index] = { ...newMeals[index], [field]: value };
     setMeals(newMeals);
   };
 
   const handleAddMeal = () => {
-    setMeals([...meals, { name: '', description: '', price: 0 }]);
+    setMeals([...meals, { name: '', description: '', price: '' }]);
   };
 
   const handleRemoveMeal = (index: number) => {
@@ -56,7 +56,7 @@ export function PromotionDialog({ promotion, onClose }: PromotionDialogProps) {
         name: meal.name,
         description: meal.description,
         additionals: meal.additionals,
-        price: Number(meal.price), // Ensure it's a number
+        price: meal.price,
       }));
 
       if (isEdit) {
@@ -169,7 +169,7 @@ export function PromotionDialog({ promotion, onClose }: PromotionDialogProps) {
                     type="number"
                     step="0.01"
                     value={meal.price}
-                    onChange={(e) => handleMealChange(index, 'price', parseFloat(e.target.value))}
+                    onChange={(e) => handleMealChange(index, 'price', e.target.value)}
                   />
                 </div>
               </div>
