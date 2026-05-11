@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { promotionAPI, type Promotion, type Meal } from '@/lib/api';
+
+type MealForm = Omit<Meal, 'price'> & { price: string };
 import { PROMOTION_TAGS } from '@/lib/tags';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -30,11 +32,13 @@ export function PromotionDialog({ promotion, onClose }: PromotionDialogProps) {
   const isEdit = !!promotion;
   const [name, setName] = useState(promotion?.name || '');
   const [tag, setTag] = useState(promotion?.tag || '');
-  const [meals, setMeals] = useState<Meal[]>(promotion?.meals || [{ name: '', description: '', price: '' }]);
+  const [meals, setMeals] = useState<MealForm[]>(
+    promotion?.meals.map((m) => ({ ...m, price: String(m.price) })) || [{ name: '', description: '', price: '' }]
+  );
   const [publishToFacebook, setPublishToFacebook] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleMealChange = (index: number, field: keyof Meal, value: string) => {
+  const handleMealChange = (index: number, field: keyof MealForm, value: string) => {
     const newMeals = [...meals];
     newMeals[index] = { ...newMeals[index], [field]: value };
     setMeals(newMeals);

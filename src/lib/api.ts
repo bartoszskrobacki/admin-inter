@@ -36,7 +36,7 @@ export interface Meal {
   name: string;
   description?: string;
   additionals?: string;
-  price: string;
+  price: number;
 }
 
 export interface Promotion {
