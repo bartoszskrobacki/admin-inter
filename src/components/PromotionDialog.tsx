@@ -56,7 +56,7 @@ export function PromotionDialog({ promotion, onClose }: PromotionDialogProps) {
         name: meal.name,
         description: meal.description,
         additionals: meal.additionals,
-        price: meal.price,
+        price: parseFloat(meal.price),
       }));
 
       if (isEdit) {
