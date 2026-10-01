@@ -23,7 +23,7 @@ export function LoginPage() {
       await login(username, password);
       navigate('/promotions');
     } catch (err) {
-      setError('Invalid credentials');
+      setError('Nieprawidłowy login lub hasło');
     } finally {
       setLoading(false);
     }
@@ -33,13 +33,13 @@ export function LoginPage() {
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Admin Login</CardTitle>
-          <CardDescription>Enter your credentials to access the admin panel</CardDescription>
+          <CardTitle>Logowanie do panelu</CardTitle>
+          <CardDescription>Podaj dane logowania, aby wejść do panelu administracyjnego</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
+              <Label htmlFor="username">Nazwa użytkownika</Label>
               <Input
                 id="username"
                 type="text"
@@ -50,7 +50,7 @@ export function LoginPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Hasło</Label>
               <Input
                 id="password"
                 type="password"
@@ -62,7 +62,7 @@ export function LoginPage() {
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Logging in...' : 'Login'}
+              {loading ? 'Logowanie...' : 'Zaloguj się'}
             </Button>
           </form>
         </CardContent>

@@ -36,15 +36,15 @@ export function ImagePreviewDialog({ promotionTag, onClose }: ImagePreviewDialog
     <Dialog open={true} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl">
         <DialogHeader>
-          <DialogTitle>Promotion Image Preview</DialogTitle>
-          <DialogDescription>Generated Facebook post image</DialogDescription>
+          <DialogTitle>Podgląd grafiki promocji</DialogTitle>
+          <DialogDescription>Wygenerowana grafika posta na Facebooku</DialogDescription>
         </DialogHeader>
 
         <div className="flex items-center justify-center">
           {loading ? (
-            <p>Loading...</p>
+            <p>Ładowanie...</p>
           ) : (
-            <img src={imageUrl} alt="Promotion preview" className="max-w-full h-auto rounded-lg" />
+            <img src={imageUrl} alt="Podgląd promocji" className="max-w-full h-auto rounded-lg" />
           )}
         </div>
       </DialogContent>

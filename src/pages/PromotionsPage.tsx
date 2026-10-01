@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { promotionAPI, type Promotion } from '@/lib/api';
 import { Button } from '@/components/ui/button';
@@ -12,6 +13,7 @@ export function PromotionsPage() {
   const [selectedPromotion, setSelectedPromotion] = useState<Promotion | null | undefined>(undefined);
   const [previewTag, setPreviewTag] = useState<string | null>(null);
   const { logout } = useAuth();
+  const navigate = useNavigate();
 
   const loadPromotions = async () => {
     try {
@@ -29,14 +31,14 @@ export function PromotionsPage() {
   }, []);
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this promotion?')) return;
+    if (!confirm('Czy na pewno chcesz usunąć tę promocję?')) return;
 
     try {
       await promotionAPI.delete(id);
       await loadPromotions();
     } catch (error) {
       console.error('Failed to delete promotion:', error);
-      alert('Failed to delete promotion');
+      alert('Nie udało się usunąć promocji');
     }
   };
 
@@ -50,19 +52,22 @@ export function PromotionsPage() {
   };
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+    return <div className="flex items-center justify-center min-h-screen">Ładowanie...</div>;
   }
 
   return (
     <div className="container mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Promotions</h1>
+        <h1 className="text-3xl font-bold">Promocje</h1>
         <div className="flex gap-2">
           <Button onClick={() => setSelectedPromotion(null)}>
-            Add Promotion
+            Dodaj promocję
+          </Button>
+          <Button variant="outline" onClick={() => navigate('/menu')}>
+            Menu
           </Button>
           <Button variant="outline" onClick={logout}>
-            Logout
+            Wyloguj
           </Button>
         </div>
       </div>
@@ -88,17 +93,17 @@ export function PromotionsPage() {
               </div>
               <div className="flex gap-2">
                 <Button size="sm" variant="outline" onClick={() => setPreviewTag(promotion.tag)}>
-                  Preview
+                  Podgląd
                 </Button>
                 <Button size="sm" variant="outline" onClick={() => handleEdit(promotion)}>
-                  Edit
+                  Edytuj
                 </Button>
                 <Button
                   size="sm"
                   variant="destructive"
                   onClick={() => handleDelete(promotion.id)}
                 >
-                  Delete
+                  Usuń
                 </Button>
               </div>
             </CardContent>

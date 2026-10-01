@@ -77,7 +77,7 @@ export function PromotionDialog({ promotion, onClose }: PromotionDialogProps) {
       onClose();
     } catch (error) {
       console.error(`Failed to ${isEdit ? 'update' : 'create'} promotion:`, error);
-      alert(`Failed to ${isEdit ? 'update' : 'create'} promotion`);
+      alert(`Nie udało się ${isEdit ? 'zapisać' : 'utworzyć'} promocji`);
     } finally {
       setLoading(false);
     }
@@ -87,23 +87,23 @@ export function PromotionDialog({ promotion, onClose }: PromotionDialogProps) {
     <Dialog open={true} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{isEdit ? 'Edit Promotion' : 'Create New Promotion'}</DialogTitle>
+          <DialogTitle>{isEdit ? 'Edytuj promocję' : 'Nowa promocja'}</DialogTitle>
           <DialogDescription>
-            {isEdit ? 'Update promotion details and meals' : 'Add a new promotion with meals'}
+            {isEdit ? 'Zmień dane promocji i dania' : 'Dodaj nową promocję z daniami'}
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4">
           <div>
-            <Label htmlFor="name">Promotion Name</Label>
+            <Label htmlFor="name">Nazwa promocji</Label>
             <Input id="name" value={name} onChange={(e) => setName(e.target.value)} />
           </div>
 
           <div>
-            <Label htmlFor="tag">Tag</Label>
+            <Label htmlFor="tag">Lokal</Label>
             <Select value={tag} onValueChange={setTag} disabled={isEdit}>
               <SelectTrigger id="tag">
-                <SelectValue placeholder="Wybierz tag" />
+                <SelectValue placeholder="Wybierz lokal" />
               </SelectTrigger>
               <SelectContent>
                 {PROMOTION_TAGS.map((t) => (
@@ -124,35 +124,35 @@ export function PromotionDialog({ promotion, onClose }: PromotionDialogProps) {
                 htmlFor="publish-facebook"
                 className="text-sm font-normal cursor-pointer"
               >
-                Publish to Facebook
+                Opublikuj na Facebooku
               </Label>
             </div>
           )}
 
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <Label>Meals</Label>
+              <Label>Dania</Label>
               <Button type="button" size="sm" variant="outline" onClick={handleAddMeal}>
-                Add Meal
+                Dodaj danie
               </Button>
             </div>
 
             {meals.map((meal, index) => (
               <div key={index} className="border p-4 rounded-lg space-y-3">
                 <div className="flex justify-between items-center">
-                  <h4 className="font-medium">Meal {index + 1}</h4>
+                  <h4 className="font-medium">Danie {index + 1}</h4>
                   <Button
                     type="button"
                     size="sm"
                     variant="destructive"
                     onClick={() => handleRemoveMeal(index)}
                   >
-                    Remove
+                    Usuń
                   </Button>
                 </div>
 
                 <div>
-                  <Label>Name</Label>
+                  <Label>Nazwa</Label>
                   <Input
                     value={meal.name}
                     onChange={(e) => handleMealChange(index, 'name', e.target.value)}
@@ -160,7 +160,7 @@ export function PromotionDialog({ promotion, onClose }: PromotionDialogProps) {
                 </div>
 
                 <div>
-                  <Label>Description</Label>
+                  <Label>Opis</Label>
                   <Input
                     value={meal.description || ''}
                     onChange={(e) => handleMealChange(index, 'description', e.target.value)}
@@ -168,7 +168,7 @@ export function PromotionDialog({ promotion, onClose }: PromotionDialogProps) {
                 </div>
 
                 <div>
-                  <Label>Price (zł)</Label>
+                  <Label>Cena (zł)</Label>
                   <Input
                     type="number"
                     step="0.01"
@@ -183,10 +183,10 @@ export function PromotionDialog({ promotion, onClose }: PromotionDialogProps) {
 
         <DialogFooter>
           <Button variant="outline" onClick={onClose}>
-            Cancel
+            Anuluj
           </Button>
           <Button onClick={handleSubmit} disabled={loading}>
-            {loading ? (isEdit ? 'Saving...' : 'Creating...') : (isEdit ? 'Save Changes' : 'Create Promotion')}
+            {loading ? (isEdit ? 'Zapisywanie...' : 'Tworzenie...') : (isEdit ? 'Zapisz zmiany' : 'Utwórz promocję')}
           </Button>
         </DialogFooter>
       </DialogContent>
